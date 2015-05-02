@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements View.OnClickListener,Googl
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
     }
 
@@ -90,6 +90,10 @@ public class MainActivity extends Activity implements View.OnClickListener,Googl
             case R.id.btn_sign_out: signOutWithGplus(); break;
             case R.id.btn_revoke_access: revokeGplusAccess(); break;
         }
+//        if (v.getId() == R.id.btn_sign_in && !mGoogleApiClient.isConnecting()) {
+//            mSignInClicked = true;
+//            mGoogleApiClient.connect();
+//        }
     }
 
     private void revokeGplusAccess() {
@@ -118,8 +122,11 @@ public class MainActivity extends Activity implements View.OnClickListener,Googl
 
     private void signInWithGplus() {
         if(!mGoogleApiClient.isConnecting()){
+//            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mSignInClicked=true;
             resolveSignInError();
+//            mGoogleApiClient.disconnect();
+//            mGoogleApiClient.connect();
         }
     }
     /**
@@ -139,11 +146,11 @@ public class MainActivity extends Activity implements View.OnClickListener,Googl
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        if(!connectionResult.hasResolution()){
-            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(),this,0).show();
+        if(!connectionResult.hasResolution()) {
+            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this, 0).show();
             return;
         }
-        if (!mIntentInProgress){
+        if (!mIntentInProgress) {
             mConnectionResult = connectionResult;
 
             if (mSignInClicked){
@@ -154,13 +161,17 @@ public class MainActivity extends Activity implements View.OnClickListener,Googl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RC_SIGN_IN ){
-            mSignInClicked=false;
-        }
-        mIntentInProgress = false;
-        if (!mGoogleApiClient.isConnecting()){
-            mGoogleApiClient.connect();
+//        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN ) {
+            if(resultCode !=RESULT_OK) {
+                mSignInClicked = false;
+                //mIntentInProgress=false;
+            }
+            mIntentInProgress=false;
+            if (!mGoogleApiClient.isConnecting()) {
+//                mGoogleApiClient.reconnect();
+                mGoogleApiClient.connect();
+            }
         }
     }
 
@@ -175,14 +186,17 @@ public class MainActivity extends Activity implements View.OnClickListener,Googl
     private void getProfileInformation() {
         try{
             if(Plus.PeopleApi.getCurrentPerson(mGoogleApiClient)!=null){
-                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+                Person currentPerson = Plus.PeopleApi
+                        .getCurrentPerson(mGoogleApiClient);
                 String personName = currentPerson.getDisplayName();
                 String personPhotoUrl = currentPerson.getImage().getUrl();
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
-                Log.e(TAG,"Name: "+ personName +", plusProfile: "+ personGooglePlusProfile
-                +", email: "+email + ", Image: "+personPhotoUrl);
+                Log.e(TAG,"Name: "+ personName
+                        +", plusProfile: "+ personGooglePlusProfile
+                        +", email: "+email
+                        +", Image: "+personPhotoUrl);
 
                 txtName.setText(personName);
                 txtEmail.setText(email);
