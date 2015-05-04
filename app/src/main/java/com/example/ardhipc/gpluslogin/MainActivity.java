@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,8 +54,10 @@ public class MainActivity extends Activity implements View.OnClickListener,
     private SignInButton btnSignIn;
     private Button btnSignOut, btnRevokeAccess;
     private ImageView imgProfilePic;
+//    private ImageView logo;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
+    private RelativeLayout rel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +68,11 @@ public class MainActivity extends Activity implements View.OnClickListener,
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
         btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
+//        logo = (ImageView) findViewById(R.id.logo);
         txtName = (TextView) findViewById(R.id.txtName);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
+        rel = (RelativeLayout) findViewById(R.id.relativlayout);
 
         // Button click listeners
         btnSignIn.setOnClickListener(this);
@@ -166,11 +171,13 @@ public class MainActivity extends Activity implements View.OnClickListener,
             btnSignOut.setVisibility(View.VISIBLE);
             btnRevokeAccess.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
+            rel.setVisibility(View.GONE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
             btnRevokeAccess.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
+            rel.setVisibility(View.VISIBLE);
         }
     }
 
@@ -263,7 +270,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
         if (mGoogleApiClient.isConnected()) {
             Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
             mGoogleApiClient.disconnect();
-            mGoogleApiClient.connect();
+           // mGoogleApiClient.connect();
             updateUI(false);
         }
     }
