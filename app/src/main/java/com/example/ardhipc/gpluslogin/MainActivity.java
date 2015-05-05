@@ -21,8 +21,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
@@ -52,9 +50,8 @@ public class MainActivity extends Activity implements View.OnClickListener,
     private ConnectionResult mConnectionResult;
 
     private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess;
+    private Button btnSignOut, btnEnterApps;
     private ImageView imgProfilePic;
-//    private ImageView logo;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
     private RelativeLayout rel;
@@ -66,9 +63,8 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
         btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
         btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
+        btnEnterApps = (Button) findViewById(R.id.btn_enter_apps);
         imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-//        logo = (ImageView) findViewById(R.id.logo);
         txtName = (TextView) findViewById(R.id.txtName);
         txtEmail = (TextView) findViewById(R.id.txtEmail);
         llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
@@ -77,7 +73,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
         // Button click listeners
         btnSignIn.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
+        btnEnterApps.setOnClickListener(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -169,13 +165,13 @@ public class MainActivity extends Activity implements View.OnClickListener,
         if (isSignedIn) {
             btnSignIn.setVisibility(View.GONE);
             btnSignOut.setVisibility(View.VISIBLE);
-            btnRevokeAccess.setVisibility(View.VISIBLE);
+            btnEnterApps.setVisibility(View.VISIBLE);
             llProfileLayout.setVisibility(View.VISIBLE);
             rel.setVisibility(View.GONE);
         } else {
             btnSignIn.setVisibility(View.VISIBLE);
             btnSignOut.setVisibility(View.GONE);
-            btnRevokeAccess.setVisibility(View.GONE);
+            btnEnterApps.setVisibility(View.GONE);
             llProfileLayout.setVisibility(View.GONE);
             rel.setVisibility(View.VISIBLE);
         }
@@ -246,9 +242,9 @@ public class MainActivity extends Activity implements View.OnClickListener,
                 // Signout button clicked
                 signOutFromGplus();
                 break;
-            case R.id.btn_revoke_access:
+            case R.id.btn_enter_apps:
                 // Revoke access button clicked
-                revokeGplusAccess();
+                enterapps();
                 break;
         }
     }
@@ -278,20 +274,22 @@ public class MainActivity extends Activity implements View.OnClickListener,
     /**
      * Revoking access from google
      * */
-    private void revokeGplusAccess() {
-        if (mGoogleApiClient.isConnected()) {
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient)
-                    .setResultCallback(new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status arg0) {
-                            Log.e(TAG, "User access revoked!");
-                            mGoogleApiClient.connect();
-                            updateUI(false);
-                        }
-
-                    });
-        }
+    private void enterapps() {
+        Intent d = new Intent(MainActivity.this,MainMenu.class);
+        startActivity(d);
+//        if (mGoogleApiClient.isConnected()) {
+//            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient)
+//                    .setResultCallback(new ResultCallback<Status>() {
+//                        @Override
+//                        public void onResult(Status arg0) {
+//                            Log.e(TAG, "User access revoked!");
+//                            mGoogleApiClient.connect();
+//                            updateUI(false);
+//                        }
+//
+//                    });
+//        }
     }
 
     /**
