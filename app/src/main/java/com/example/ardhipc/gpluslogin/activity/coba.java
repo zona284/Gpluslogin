@@ -5,4 +5,5 @@ package com.example.ardhipc.gpluslogin.activity;
  */
 public class coba extends MainActivity{
     private static int raka;
+
 }
