@@ -40,7 +40,7 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout),mToolbar);
         drawerFragment.setDrawerListener(this);
         // display the first navigation drawer view on app launch
-        displayView(0);
+        displayView(1);
     }
 
     @Override
@@ -60,16 +60,20 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         String title = getString(R.string.app_name);
         switch (position) {
             case 0:
-                fragment = new HomeFragment();
-                title = getString(R.string.title_home);
+                fragment = new ProfileFragment();
+                title = getString(R.string.title_profile);
                 break;
             case 1:
-                fragment = new FriendsFragment();
-                title = getString(R.string.title_friends);
+                fragment = new EventFragment();
+                title = getString(R.string.title_event);
                 break;
             case 2:
-                fragment = new MessagesFragment();
-                title = getString(R.string.title_messages);
+                fragment = new TimelineFragment();
+                title = getString(R.string.title_timeline);
+                break;
+            case 3:
+                fragment = new AllEventFragment();
+                title = getString(R.string.title_allevent);
                 break;
             default:
                 break;

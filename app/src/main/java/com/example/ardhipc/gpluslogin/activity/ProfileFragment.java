@@ -13,8 +13,8 @@ import com.example.ardhipc.gpluslogin.R;
 /**
  * Created by Ardhipc on 5/6/2015.
  */
-public class MessagesFragment extends Fragment {
-    public MessagesFragment(){
+public class ProfileFragment extends Fragment{
+    public ProfileFragment(){
 
     }
 
@@ -26,7 +26,7 @@ public class MessagesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_messages, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
 
         // Inflate the layout for this fragment

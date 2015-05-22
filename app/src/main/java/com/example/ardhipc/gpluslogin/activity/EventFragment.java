@@ -13,8 +13,8 @@ import com.example.ardhipc.gpluslogin.R;
 /**
  * Created by Ardhipc on 5/6/2015.
  */
-public class HomeFragment extends Fragment{
-    public HomeFragment(){
+public class EventFragment extends Fragment {
+    public EventFragment(){
 
     }
 
@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_event, container, false);
 
 
         // Inflate the layout for this fragment
