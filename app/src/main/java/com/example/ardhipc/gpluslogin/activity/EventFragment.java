@@ -1,9 +1,13 @@
 package com.example.ardhipc.gpluslogin.activity;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+=======
+import android.content.Intent;
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,9 +32,21 @@ import java.util.List;
 /**
  * Created by Ardhipc on 5/6/2015.
  */
+<<<<<<< HEAD
 public class EventFragment extends Activity {
     // Log tag
     private static final String TAG = EventFragment.class.getSimpleName();
+=======
+<<<<<<< HEAD:app/src/main/java/com/example/ardhipc/gpluslogin/activity/HomeFragment.java
+public class HomeFragment extends Fragment{
+    public HomeFragment(){
+    Intent i = new Intent();
+        i.getStringExtra("email");
+=======
+public class EventFragment extends Fragment {
+    public EventFragment(){
+>>>>>>> upstream/master:app/src/main/java/com/example/ardhipc/gpluslogin/activity/EventFragment.java
+>>>>>>> origin/master
 
     // Movies json url
     private static final String url = "http://api.androidhive.info/json/movies.json";

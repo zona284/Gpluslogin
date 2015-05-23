@@ -25,6 +25,124 @@
         android:textSize="12dp"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Edit fragment_home.xml to change the appearance" />
+        android:text="Edit fragment_home.xml to change the appearance"
+        android:id="@+id/textView3" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Location coordiante GPS" />
+
+    <TextView
+        android:id="@+id/isilat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Latitude		: " />
+
+    <TextView
+        android:id="@+id/isilong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Longitude	: " />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Masukan data kebun"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignStart="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/nama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Nama kebun     : "
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/isinama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/isialamat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Nomor HP : "
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/nohp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/textView3"
+        android:layout_toEndOf="@+id/textView1"
+        android:layout_alignLeft="@+id/isialamat"
+        android:layout_alignStart="@+id/isialamat" />
+
+    <TextView
+        android:id="@+id/alamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Alamat 	: "
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/isialamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:ems="10"
+        android:layout_below="@+id/nohp"
+        android:layout_marginTop="37dp"
+        android:layout_toEndOf="@+id/TextView01"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/lihat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="lihat"
+        android:text="lihat data kebun"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/isinama"
+        android:layout_alignStart="@+id/isinama"
+        android:layout_marginBottom="34dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="simpan"
+        android:text="Simpan"
+        android:layout_above="@+id/lihat"
+        android:layout_alignLeft="@+id/lihat"
+        android:layout_alignStart="@+id/lihat" />
 
 </RelativeLayout>

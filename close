@@ -1,0 +1,334 @@
+[33mcommit 802f74d1bc233f1282bbbc683842e8ab794583c8[m
+Author: ardhimaarik <ardhimaarik@yahoo.co.id>
+Date:   Sat May 23 11:35:28 2015 +0700
+
+    merge raka
+
+[1mdiff --git a/app/src/main/java/com/example/ardhipc/gpluslogin/activity/EventFragment.java b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/EventFragment.java[m
+[1mindex 2b00626..55ae3fa 100644[m
+[1m--- a/app/src/main/java/com/example/ardhipc/gpluslogin/activity/EventFragment.java[m
+[1m+++ b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/EventFragment.java[m
+[36m@@ -1,45 +1,133 @@[m
+ package com.example.ardhipc.gpluslogin.activity;[m
+ [m
+ import android.app.Activity;[m
+[32m+[m[32mimport android.app.ProgressDialog;[m
+[32m+[m[32mimport android.graphics.Color;[m
+[32m+[m[32mimport android.graphics.drawable.ColorDrawable;[m
+ import android.os.Bundle;[m
+[31m-import android.support.annotation.Nullable;[m
+[31m-import android.support.v4.app.Fragment;[m
+[31m-import android.view.LayoutInflater;[m
+[31m-import android.view.View;[m
+[31m-import android.view.ViewGroup;[m
+[32m+[m[32mimport android.util.Log;[m
+[32m+[m[32mimport android.view.Menu;[m
+[32m+[m[32mimport android.widget.ListView;[m
+ [m
+[32m+[m[32mimport com.android.volley.Response;[m
+[32m+[m[32mimport com.android.volley.VolleyError;[m
+[32m+[m[32mimport com.android.volley.VolleyLog;[m
+[32m+[m[32mimport com.android.volley.toolbox.JsonArrayRequest;[m
+ import com.example.ardhipc.gpluslogin.R;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.activity.event.adapter.CustomListAdapter;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.activity.event.app.AppController;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.activity.event.model.Movie;[m
+[32m+[m
+[32m+[m[32mimport org.json.JSONArray;[m
+[32m+[m[32mimport org.json.JSONException;[m
+[32m+[m[32mimport org.json.JSONObject;[m
+[32m+[m
+[32m+[m[32mimport java.util.ArrayList;[m
+[32m+[m[32mimport java.util.List;[m
+ [m
+ /**[m
+  * Created by Ardhipc on 5/6/2015.[m
+  */[m
+[31m-public class EventFragment extends Fragment {[m
+[31m-    public EventFragment(){[m
+[32m+[m[32mpublic class EventFragment extends Activity {[m
+[32m+[m[32m    // Log tag[m
+[32m+[m[32m    private static final String TAG = EventFragment.class.getSimpleName();[m
+ [m
+[31m-    }[m
+[32m+[m[32m    // Movies json url[m
+[32m+[m[32m    private static final String url = "http://api.androidhive.info/json/movies.json";[m
+[32m+[m[32m    private ProgressDialog pDialog;[m
+[32m+[m[32m    private List<Movie> movieList = new ArrayList<Movie>();[m
+[32m+[m[32m    private ListView listView;[m
+[32m+[m[32m    private CustomListAdapter adapter;[m
+ [m
+     @Override[m
+[31m-    public void onCreate(@Nullable Bundle savedInstanceState) {[m
+[32m+[m[32m    protected void onCreate(Bundle savedInstanceState) {[m
+         super.onCreate(savedInstanceState);[m
+[31m-    }[m
+[32m+[m[32m        setContentView(R.layout.activity_main);[m
+ [m
+[31m-    @Nullable[m
+[31m-    @Override[m
+[31m-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {[m
+[31m-        View rootView = inflater.inflate(R.layout.fragment_event, container, false);[m
+[32m+[m[32m        listView = (ListView) findViewById(R.id.list);[m
+[32m+[m[32m        adapter = new CustomListAdapter(this, movieList);[m
+[32m+[m[32m        listView.setAdapter(adapter);[m
+[32m+[m
+[32m+[m[32m        pDialog = new ProgressDialog(this);[m
+[32m+[m[32m        // Showing progress dialog before making http request[m
+[32m+[m[32m        pDialog.setMessage("Loading...");[m
+[32m+[m[32m        pDialog.show();[m
+[32m+[m
+[32m+[m[32m        // changing action bar color[m
+[32m+[m[32m        getActionBar().setBackgroundDrawable([m
+[32m+[m[32m                new ColorDrawable(Color.parseColor("#1b1b1b")));[m
+[32m+[m
+[32m+[m[32m        // Creating volley request obj[m
+[32m+[m[32m        JsonArrayRequest movieReq = new JsonArrayRequest(url,[m
+[32m+[m[32m                new Response.Listener<JSONArray>() {[m
+[32m+[m[32m                    @Override[m
+[32m+[m[32m                    public void onResponse(JSONArray response) {[m
+[32m+[m[32m                        Log.d(TAG, response.toString());[m
+[32m+[m[32m                        hidePDialog();[m
+[32m+[m
+[32m+[m[32m                        // Parsing json[m
+[32m+[m[32m                        for (int i = 0; i < response.length(); i++) {[m
+[32m+[m[32m                            try {[m
+ [m
+[32m+[m[32m                                JSONObject obj = response.getJSONObject(i);[m
+[32m+[m[32m                                Movie movie = new Movie();[m
+[32m+[m[32m                                movie.setTitle(obj.getString("title"));[m
+[32m+[m[32m                                movie.setThumbnailUrl(obj.getString("image"));[m
+[32m+[m[32m                                movie.setRating(((Number) obj.get("rating"))[m
+[32m+[m[32m                                        .doubleValue());[m
+[32m+[m[32m                                movie.setYear(obj.getInt("releaseYear"));[m
+ [m
+[31m-        // Inflate the layout for this fragment[m
+[31m-        return rootView;[m
+[32m+[m[32m                                // Genre is json array[m
+[32m+[m[32m                                JSONArray genreArry = obj.getJSONArray("genre");[m
+[32m+[m[32m                                ArrayList<String> genre = new ArrayList<String>();[m
+[32m+[m[32m                                for (int j = 0; j < genreArry.length(); j++) {[m
+[32m+[m[32m                                    genre.add((String) genreArry.get(j));[m
+[32m+[m[32m                                }[m
+[32m+[m[32m                                movie.setGenre(genre);[m
+[32m+[m
+[32m+[m[32m                                // adding movie to movies array[m
+[32m+[m[32m                                movieList.add(movie);[m
+[32m+[m
+[32m+[m[32m                            } catch (JSONException e) {[m
+[32m+[m[32m                                e.printStackTrace();[m
+[32m+[m[32m                            }[m
+[32m+[m
+[32m+[m[32m                        }[m
+[32m+[m
+[32m+[m[32m                        // notifying list adapter about data changes[m
+[32m+[m[32m                        // so that it renders the list view with updated data[m
+[32m+[m[32m                        adapter.notifyDataSetChanged();[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                }, new Response.ErrorListener() {[m
+[32m+[m[32m            @Override[m
+[32m+[m[32m            public void onErrorResponse(VolleyError error) {[m
+[32m+[m[32m                VolleyLog.d(TAG, "Error: " + error.getMessage());[m
+[32m+[m[32m                hidePDialog();[m
+[32m+[m
+[32m+[m[32m            }[m
+[32m+[m[32m        });[m
+[32m+[m
+[32m+[m[32m        // Adding request to request queue[m
+[32m+[m[32m        AppController.getInstance().addToRequestQueue(movieReq);[m
+     }[m
+ [m
+     @Override[m
+[31m-    public void onAttach(Activity activity) {[m
+[31m-        super.onAttach(activity);[m
+[32m+[m[32m    public void onDestroy() {[m
+[32m+[m[32m        super.onDestroy();[m
+[32m+[m[32m        hidePDialog();[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private void hidePDialog() {[m
+[32m+[m[32m        if (pDialog != null) {[m
+[32m+[m[32m            pDialog.dismiss();[m
+[32m+[m[32m            pDialog = null;[m
+[32m+[m[32m        }[m
+     }[m
+ [m
+     @Override[m
+[31m-    public void onDetach() {[m
+[31m-        super.onDetach();[m
+[32m+[m[32m    public boolean onCreateOptionsMenu(Menu menu) {[m
+[32m+[m[32m        // Inflate the menu; this adds items to the action bar if it is present.[m
+[32m+[m[32m        getMenuInflater().inflate(R.menu.menu_main, menu);[m
+[32m+[m[32m        return true;[m
+     }[m
+ }[m
+[1mdiff --git a/app/src/main/java/com/example/ardhipc/gpluslogin/activity/MainMenu.java b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/MainMenu.java[m
+[1mindex a956115..17b50ce 100644[m
+[1m--- a/app/src/main/java/com/example/ardhipc/gpluslogin/activity/MainMenu.java[m
+[1m+++ b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/MainMenu.java[m
+[36m@@ -1,10 +1,9 @@[m
+ package com.example.ardhipc.gpluslogin.activity;[m
+ [m
+[32m+[m[32mimport android.content.Intent;[m
+ import android.os.Bundle;[m
+ import android.support.annotation.Nullable;[m
+ import android.support.v4.app.Fragment;[m
+[31m-import android.support.v4.app.FragmentManager;[m
+[31m-import android.support.v4.app.FragmentTransaction;[m
+ import android.support.v4.widget.DrawerLayout;[m
+ import android.support.v7.app.ActionBarActivity;[m
+ import android.support.v7.widget.Toolbar;[m
+[36m@@ -64,7 +63,8 @@[m [mpublic class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme[m
+                 title = getString(R.string.title_profile);[m
+                 break;[m
+             case 1:[m
+[31m-                fragment = new EventFragment();[m
+[32m+[m[32m                Intent d = new Intent(MainMenu.this,EventFragment.class);[m
+[32m+[m[32m                startActivity(d);[m
+                 title = getString(R.string.title_event);[m
+                 break;[m
+             case 2:[m
+[36m@@ -78,15 +78,7 @@[m [mpublic class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme[m
+             default:[m
+                 break;[m
+         }[m
+[31m-        if (fragment != null){[m
+[31m-            FragmentManager fragmentManager = getSupportFragmentManager();[m
+[31m-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();[m
+[31m-            fragmentTransaction.replace(R.id.container_body, fragment);[m
+[31m-            fragmentTransaction.commit();[m
+[31m-[m
+[31m-            // set the toolbar title[m
+[31m-            getSupportActionBar().setTitle(title);[m
+[31m-        }[m
+[32m+[m
+ [m
+     }[m
+ [m
+[1mdiff --git a/app/src/main/java/com/example/ardhipc/gpluslogin/activity/event/adapter/CustomListAdapter.java b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/event/adapter/CustomListAdapter.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..81df282[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/event/adapter/CustomListAdapter.java[m
+[36m@@ -0,0 +1,92 @@[m
+[32m+[m[32mpackage com.example.ardhipc.gpluslogin.activity.event.adapter;[m
+[32m+[m
+[32m+[m[32mimport android.app.Activity;[m
+[32m+[m[32mimport android.content.Context;[m
+[32m+[m[32mimport android.view.LayoutInflater;[m
+[32m+[m[32mimport android.view.View;[m
+[32m+[m[32mimport android.view.ViewGroup;[m
+[32m+[m[32mimport android.widget.BaseAdapter;[m
+[32m+[m[32mimport android.widget.TextView;[m
+[32m+[m
+[32m+[m[32mimport com.android.volley.toolbox.ImageLoader;[m
+[32m+[m[32mimport com.android.volley.toolbox.NetworkImageView;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.R;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.activity.event.app.AppController;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.activity.event.model.Movie;[m
+[32m+[m
+[32m+[m[32mimport java.util.List;[m
+[32m+[m
+[32m+[m[32m/**[m
+[32m+[m[32m * Created by Ardhipc on 5/23/2015.[m
+[32m+[m[32m */[m
+[32m+[m[32mpublic class CustomListAdapter extends BaseAdapter {[m
+[32m+[m[32m    private Activity activity;[m
+[32m+[m[32m    private LayoutInflater inflater;[m
+[32m+[m[32m    private List<Movie> movieItems;[m
+[32m+[m[32m    ImageLoader imageLoader = AppController.getInstance().getImageLoader();[m
+[32m+[m
+[32m+[m[32m    public CustomListAdapter(Activity activity, List<Movie> movieItems) {[m
+[32m+[m[32m        this.activity = activity;[m
+[32m+[m[32m        this.movieItems = movieItems;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public int getCount() {[m
+[32m+[m[32m        return movieItems.size();[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public Object getItem(int location) {[m
+[32m+[m[32m        return movieItems.get(location);[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public long getItemId(int position) {[m
+[32m+[m[32m        return position;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    @Override[m
+[32m+[m[32m    public View getView(int position, View convertView, ViewGroup parent) {[m
+[32m+[m
+[32m+[m[32m        if (inflater == null)[m
+[32m+[m[32m            inflater = (LayoutInflater) activity[m
+[32m+[m[32m                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);[m
+[32m+[m[32m        if (convertView == null)[m
+[32m+[m[32m            convertView = inflater.inflate(R.layout.list_row, null);[m
+[32m+[m
+[32m+[m[32m        if (imageLoader == null)[m
+[32m+[m[32m            imageLoader = AppController.getInstance().getImageLoader();[m
+[32m+[m[32m        NetworkImageView thumbNail = (NetworkImageView) convertView[m
+[32m+[m[32m                .findViewById(R.id.thumbnail);[m
+[32m+[m[32m        TextView title = (TextView) convertView.findViewById(R.id.title);[m
+[32m+[m[32m        TextView rating = (TextView) convertView.findViewById(R.id.rating);[m
+[32m+[m[32m        TextView genre = (TextView) convertView.findViewById(R.id.genre);[m
+[32m+[m[32m        TextView year = (TextView) convertView.findViewById(R.id.releaseYear);[m
+[32m+[m
+[32m+[m[32m        // getting movie data for the row[m
+[32m+[m[32m        Movie m = movieItems.get(position);[m
+[32m+[m
+[32m+[m[32m        // thumbnail image[m
+[32m+[m[32m        thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);[m
+[32m+[m
+[32m+[m[32m        // title[m
+[32m+[m[32m        title.setText(m.getTitle());[m
+[32m+[m
+[32m+[m[32m        // rating[m
+[32m+[m[32m        rating.setText("Rating: " + String.valueOf(m.getRating()));[m
+[32m+[m
+[32m+[m[32m        // genre[m
+[32m+[m[32m        String genreStr = "";[m
+[32m+[m[32m        for (String str : m.getGenre()) {[m
+[32m+[m[32m            genreStr += str + ", ";[m
+[32m+[m[32m        }[m
+[32m+[m[32m        genreStr = genreStr.length() > 0 ? genreStr.substring(0,[m
+[32m+[m[32m                genreStr.length() - 2) : genreStr;[m
+[32m+[m[32m        genre.setText(genreStr);[m
+[32m+[m
+[32m+[m[32m        // release year[m
+[32m+[m[32m        year.setText(String.valueOf(m.getYear()));[m
+[32m+[m
+[32m+[m[32m        return convertView;[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[1mdiff --git a/app/src/main/java/com/example/ardhipc/gpluslogin/activity/event/app/AppController.java b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/event/app/AppController.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3e8aeef[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/example/ardhipc/gpluslogin/activity/event/app/AppController.java[m
+[36m@@ -0,0 +1,66 @@[m
+[32m+[m[32mpackage com.example.ardhipc.gpluslogin.activity.event.app;[m
+[32m+[m
+[32m+[m[32mimport android.app.Application;[m
+[32m+[m[32mimport android.text.TextUtils;[m
+[32m+[m
+[32m+[m[32mimport com.android.volley.Request;[m
+[32m+[m[32mimport com.android.volley.RequestQueue;[m
+[32m+[m[32mimport com.android.volley.toolbox.ImageLoader;[m
+[32m+[m[32mimport com.android.volley.toolbox.Volley;[m
+[32m+[m[32mimport com.example.ardhipc.gpluslogin.activity.event.util.LruBitmapCache;[m
+[32m+[m
+[32m+[m[32m/**[m
+[32m+[m[32m * Created by Ardhipc on 5/23/2015.[m
+[32m+[m[32m */[m
+[32m+[m[32mpublic class AppController extends Application {[m
+[32m+[m[32m    public static final String TAG = AppController.class.getSimpleName();[m
+[32m+[m
+[32m+[m[32m    private RequestQueue mRequestQueue;[m
+[32m+[m[32m    private ImageLoader mImageLoader;[m
+[32m+[m
+[32m+[m[32m    private static AppController mInstance;[m
+[32m+[m
+[32m+[m[32m  
