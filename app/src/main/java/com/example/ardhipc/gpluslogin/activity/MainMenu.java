@@ -1,10 +1,9 @@
 package com.example.ardhipc.gpluslogin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -64,7 +63,8 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
                 title = getString(R.string.title_profile);
                 break;
             case 1:
-                fragment = new EventFragment();
+                Intent d = new Intent(MainMenu.this,EventFragment.class);
+                startActivity(d);
                 title = getString(R.string.title_event);
                 break;
             case 2:
@@ -78,15 +78,7 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
             default:
                 break;
         }
-        if (fragment != null){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            fragmentTransaction.commit();
 
-            // set the toolbar title
-            getSupportActionBar().setTitle(title);
-        }
 
     }
 
