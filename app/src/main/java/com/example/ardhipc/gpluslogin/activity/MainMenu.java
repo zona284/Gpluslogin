@@ -2,11 +2,17 @@ package com.example.ardhipc.gpluslogin.activity;
 
 import android.content.Intent;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 >>>>>>> origin/master
+=======
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+>>>>>>> 424cf4439692d0f53dd97ce2c097fb983e1b54a5
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
