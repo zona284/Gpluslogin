@@ -1,10 +1,24 @@
 package com.example.ardhipc.gpluslogin.activity;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+=======
+import android.content.Intent;
+>>>>>>> origin/master
+=======
+import android.content.Intent;
+>>>>>>> 424cf4439692d0f53dd97ce2c097fb983e1b54a5
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,10 +54,35 @@ import java.util.List;
 /**
  * Created by Ardhipc on 5/6/2015.
  */
+<<<<<<< HEAD
 public class EventFragment extends Fragment {
     // Log tag
     private static final String TAG = MainActivity.class.getSimpleName();
     Context context;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+public class EventFragment extends Activity {
+    // Log tag
+    private static final String TAG = EventFragment.class.getSimpleName();
+=======
+=======
+>>>>>>> 424cf4439692d0f53dd97ce2c097fb983e1b54a5
+<<<<<<< HEAD:app/src/main/java/com/example/ardhipc/gpluslogin/activity/HomeFragment.java
+public class HomeFragment extends Fragment{
+    public HomeFragment(){
+    Intent i = new Intent();
+        i.getStringExtra("email");
+=======
+public class EventFragment extends Fragment {
+    public EventFragment(){
+>>>>>>> upstream/master:app/src/main/java/com/example/ardhipc/gpluslogin/activity/EventFragment.java
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
+>>>>>>> 424cf4439692d0f53dd97ce2c097fb983e1b54a5
+
+>>>>>>> origin/master
     // Movies json url
     private static final String url = "http://eventhere.belibun.com/prosesbaru.php";
     private ProgressDialog pDialog;

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
+<<<<<<< HEAD
     <TextView
         android:id="@+id/label"
         android:layout_width="fill_parent"
@@ -26,8 +27,32 @@
         android:layout_below="@+id/label"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+=======
+<<<<<<< HEAD
+>>>>>>> origin/master
     <ListView
         android:id="@+id/list"
+=======
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="100dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="45dp"
+<<<<<<< HEAD:app/src/main/res/layout/fragment_home.xml
+        android:text="rumah"
+=======
+        android:text="EVENT"
+>>>>>>> upstream/master:app/src/main/res/layout/fragment_event.xml
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_below="@id/label"
+        android:layout_centerInParent="true"
+>>>>>>> origin/master
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@color/list_divider"
