@@ -1,9 +1,18 @@
 package com.example.ardhipc.gpluslogin.activity;
 
 import android.content.Intent;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+>>>>>>> origin/master
+=======
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+>>>>>>> 424cf4439692d0f53dd97ce2c097fb983e1b54a5
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -51,7 +60,21 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout),mToolbar);
         drawerFragment.setDrawerListener(this);
         // display the first navigation drawer view on app launch
+<<<<<<< HEAD
+        Intent i = getIntent();
+        email = i.getStringExtra("email");
+        photo = i.getStringExtra("photo");
+        imgProfilePic = (ImageView) findViewById(R.id.fotoprofil);
+        txtEmail = (TextView) findViewById(R.id.email);
+        txtEmail.setText(email);
+        Log.e(TAG, "email: " + email);
+        new LoadProfileImage(imgProfilePic).execute(photo);
+
+        //System.out.print(email);
+        displayView(0);
+=======
         displayView(1);
+>>>>>>> upstream/master
     }
 
     /**
@@ -141,6 +164,10 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         if(id == R.id.action_search){
             Toast.makeText(getApplicationContext(), "Search action is selected!", Toast.LENGTH_SHORT).show();
             return true;
+        }
+
+        if(id==R.id.logout){
+            MainActivity.onStop();
         }
 
         return super.onOptionsItemSelected(item);
