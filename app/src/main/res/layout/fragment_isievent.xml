@@ -1,6 +1,133 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ardhipc.gpluslogin.activity.ProfileFragment">
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/abc_text_size_title_material_toolbar"
+        android:text="Masukan Event Baru"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama                 :"
+        android:id="@+id/nama"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_below="@+id/label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal             :"
+        android:id="@+id/kategori"
+        android:layout_below="@+id/tx_nama"
+        android:layout_alignLeft="@+id/nama"
+        android:layout_alignStart="@+id/nama" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kategori             :"
+        android:id="@+id/waktu"
+        android:layout_below="@+id/tx_waktu"
+        android:layout_alignLeft="@+id/kategori"
+        android:layout_alignStart="@+id/kategori" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Person :"
+        android:id="@+id/cp"
+        android:layout_below="@+id/tx_kategori"
+        android:layout_alignRight="@+id/kategori"
+        android:layout_alignEnd="@+id/kategori" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deskripsi             :"
+        android:id="@+id/deskripsi"
+        android:layout_below="@+id/tx_cp"
+        android:layout_alignLeft="@+id/waktu"
+        android:layout_alignStart="@+id/waktu" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_nama"
+        android:inputType="text"
+        android:layout_alignTop="@+id/nama"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/cp"
+        android:layout_toEndOf="@+id/cp"
+        android:layout_marginRight="24dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_waktu"
+        android:inputType="date"
+        android:layout_alignTop="@+id/kategori"
+        android:layout_alignLeft="@+id/tx_nama"
+        android:layout_alignStart="@+id/tx_nama"
+        android:layout_alignRight="@+id/tx_nama"
+        android:layout_alignEnd="@+id/tx_nama" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_kategori"
+        android:inputType="text"
+        android:layout_alignTop="@+id/waktu"
+        android:layout_toRightOf="@+id/cp"
+        android:layout_alignRight="@+id/tx_waktu"
+        android:layout_alignEnd="@+id/tx_waktu" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_cp"
+        android:phoneNumber="true"
+        android:autoText="false"
+        android:inputType="phone"
+        android:layout_alignTop="@+id/cp"
+        android:layout_toRightOf="@+id/cp"
+        android:layout_alignRight="@+id/tx_kategori"
+        android:layout_alignEnd="@+id/tx_kategori" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Masukan Event"
+        android:id="@+id/input"
+        android:layout_below="@+id/tx_deskripsi"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_deskripsi"
+        android:layout_below="@+id/deskripsi"
+        android:layout_alignLeft="@+id/deskripsi"
+        android:layout_alignStart="@+id/deskripsi"
+        android:layout_alignRight="@+id/tx_cp"
+        android:layout_alignEnd="@+id/tx_cp"
+        android:lines="3" />
+
+</RelativeLayout>

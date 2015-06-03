@@ -1,12 +1,14 @@
 package com.example.ardhipc.gpluslogin.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ardhipc.gpluslogin.R;
+import com.example.ardhipc.gpluslogin.activity.event.JSONParser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
@@ -25,10 +28,23 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity implements View.OnClickListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    JSONParser jsonParser = new JSONParser();
+    private static String url_create_product = "http://eventhere.belibun.com/login.php";
+    private String fotouser;
+    private String emailuser;
+    private String namauser;
+    private String gplususer;
+    private ProgressDialog pDialog;
 
     private static final int RC_SIGN_IN = 0;
     // Logcat tag
@@ -191,6 +207,11 @@ public class MainActivity extends Activity implements View.OnClickListener,
                 String personGooglePlusProfile = currentPerson.getUrl();
                 String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
+                namauser = currentPerson.getDisplayName();
+                fotouser = currentPerson.getImage().getUrl();
+                gplususer = currentPerson.getUrl();
+                emailuser = Plus.AccountApi.getAccountName(mGoogleApiClient);
+
                 Log.e(TAG, "Name: " + personName + ", plusProfile: "
                         + personGooglePlusProfile + ", email: " + email
                         + ", Image: " + personPhotoUrl);
@@ -276,21 +297,46 @@ public class MainActivity extends Activity implements View.OnClickListener,
      * Revoking access from google
      * */
     private void enterapps() {
-        Intent d = new Intent(MainActivity.this,MainMenu.class);
-        startActivity(d);
-//        if (mGoogleApiClient.isConnected()) {
-//            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-//            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient)
-//                    .setResultCallback(new ResultCallback<Status>() {
-//                        @Override
-//                        public void onResult(Status arg0) {
-//                            Log.e(TAG, "User access revoked!");
-//                            mGoogleApiClient.connect();
-//                            updateUI(false);
-//                        }
-//
-//                    });
-//        }
+        new IsiData().execute();
+    }
+    public class IsiData extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage(Html
+                    .fromHtml("<b>Login</b><br/>Please wait..."));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        protected String doInBackground(String... args) {
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("nama", namauser));
+            params.add(new BasicNameValuePair("emailuser", emailuser));
+            params.add(new BasicNameValuePair("foto", fotouser));
+            // getting JSON Object
+            // Note that create product url accepts POST method
+            JSONObject json = jsonParser.makeHttpRequest(url_create_product,
+                    "POST", params);
+
+            return null;
+        }
+        protected void onPostExecute(String file_url) {
+            Intent d = new Intent(MainActivity.this,MainMenu.class);
+            d.putExtra("photo",fotouser);
+            d.putExtra("email",emailuser);
+            d.putExtra("nama",namauser);
+            d.putExtra("profile", gplususer);
+            startActivity(d);
+            Toast toast = Toast.makeText(MainActivity.this, "Login Berhasil",
+                    Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
     }
 
     /**
@@ -301,6 +347,17 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
         public LoadProfileImage(ImageView bmImage) {
             this.bmImage = bmImage;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(MainActivity.this);
+            pDialog.setMessage(Html
+                    .fromHtml("<b>EventHere</b><br/>Get Your Profile..."));
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -318,6 +375,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+            pDialog.dismiss();
         }
     }
 

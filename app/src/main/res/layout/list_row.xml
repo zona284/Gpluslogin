@@ -7,7 +7,7 @@
 
     <!-- Thumbnail Image -->
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/thumbnail"
+        android:id="@+id/foto"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
@@ -15,43 +15,80 @@
 
     <!-- Movie Title -->
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/thumbnail"
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_alignTop="@+id/foto"
+        android:layout_toRightOf="@+id/foto"
         android:textSize="@dimen/title"
         android:textStyle="bold" />
 
     <!-- Rating -->
     <TextView
-        android:id="@+id/rating"
+        android:id="@+id/kategori"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
+        android:layout_below="@id/nama"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:textSize="@dimen/rating" />
-
+        android:textSize="@dimen/rating"
+        android:layout_toRightOf="@+id/kategori1"
+        android:layout_toEndOf="@+id/kategori1" />
+    <TextView
+        android:id="@+id/kategori1"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nama"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/foto"
+        android:textSize="@dimen/rating"
+        android:text="Kategori :" />
     <!-- Genre -->
     <TextView
-        android:id="@+id/genre"
+        android:id="@+id/cp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rating"
+        android:layout_below="@id/kategori"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/thumbnail"
         android:textColor="@color/genre"
-        android:textSize="@dimen/genre" />
+        android:textSize="@dimen/genre"
+        android:layout_toRightOf="@+id/cp1"
+        android:layout_toEndOf="@+id/cp1" />
+    <TextView
+        android:id="@+id/cp1"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/kategori"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/foto"
+        android:textColor="@color/genre"
+        android:textSize="@dimen/genre"
+        android:text="Cp :" />
 
     <!-- Release Year -->
     <TextView
-        android:id="@+id/releaseYear"
+        android:id="@+id/waktu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:textColor="@color/year"
         android:textSize="@dimen/year" />
+
+    <TextView
+        android:id="@+id/deskripsi"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/verivikasi"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/id"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>

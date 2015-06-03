@@ -1,19 +1,29 @@
 package com.example.ardhipc.gpluslogin.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ardhipc.gpluslogin.R;
 import com.example.ardhipc.gpluslogin.adapter.FragmentDrawer;
+
+import java.io.InputStream;
 
 /**
  * Created by Ardhipc on 5/5/2015.
@@ -23,6 +33,13 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+    private TextView namauserr;
+    private ImageView fotouserr;
+    private String email;
+    private String photo,nama;
+
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +56,47 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout),mToolbar);
         drawerFragment.setDrawerListener(this);
         // display the first navigation drawer view on app launch
+        Intent i = getIntent();
+        nama = i.getStringExtra("nama");
+        email = i.getStringExtra("email");
+        photo = i.getStringExtra("photo");
+        fotouserr = (ImageView) findViewById(R.id.imageView);
+        namauserr = (TextView) findViewById(R.id.namauser);
+        namauserr.setText(email);
+        Log.e(TAG, "email: " + nama);
+        new LoadProfileImage(fotouserr).execute(photo);
+
         displayView(1);
+    }
+    /**
+     * Background Async task to load user profile picture from url
+     * */
+    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public LoadProfileImage(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            if(result==null)
+                bmImage.setImageResource(R.drawable.ic_profile);
+            else
+                bmImage.setImageBitmap(result);
+        }
     }
 
     @Override
@@ -63,13 +120,12 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
                 title = getString(R.string.title_profile);
                 break;
             case 1:
-                Intent d = new Intent(MainMenu.this,EventFragment.class);
-                startActivity(d);
+                fragment = new EventFragment();
                 title = getString(R.string.title_event);
                 break;
             case 2:
-                fragment = new TimelineFragment();
-                title = getString(R.string.title_timeline);
+                fragment = new IsiEventFragment();
+                title = getString(R.string.title_isievent);
                 break;
             case 3:
                 fragment = new AllEventFragment();
@@ -78,7 +134,22 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
             default:
                 break;
         }
+        if (fragment != null){
+            FragmentManager fragmentManager = getSupportFragmentManager();
 
+            Bundle bundle = new Bundle();
+            bundle.putString("namauser",nama);
+            bundle.putString("emailuser",email);
+            bundle.putString("fotouser",photo);
+            fragment.setArguments(bundle);
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_body, fragment);
+            fragmentTransaction.commit();
+
+            // set the toolbar title
+            getSupportActionBar().setTitle(title);
+        }
 
     }
 

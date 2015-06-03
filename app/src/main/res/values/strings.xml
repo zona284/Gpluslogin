@@ -15,21 +15,21 @@
 
     <string name="nav_item_profile">Profile</string>
     <string name="nav_item_event">Event</string>
-    <string name="nav_item_timeline">TimeLine</string>
+    <string name="nav_item_input">Tambah Event</string>
     <string name="nav_item_allevent">All Events</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_profile</item>
         <item>@string/nav_item_event</item>
-        <item>@string/nav_item_timeline</item>
-        <item>@string/nav_item_allevent</item>
+        <item>@string/nav_item_input</item>
     </string-array>
 
     <string name="title_profile">Profile</string>
     <string name="title_event">Event</string>
-    <string name="title_timeline">Timeline</string>
+    <string name="title_timeline">Tambah Event</string>
     <string name="title_allevent">All Event</string>
+    <string name="title_isievent">Tambah Event</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
