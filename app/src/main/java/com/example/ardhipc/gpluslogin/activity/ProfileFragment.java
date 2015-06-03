@@ -3,16 +3,20 @@ package com.example.ardhipc.gpluslogin.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,6 +30,7 @@ import com.example.ardhipc.gpluslogin.activity.event.model.Event;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +49,7 @@ public class ProfileFragment extends Fragment{
     private CustomListAdapterr adapter;
     String namauser, emailuser, fotouser;
     String nid;
+    ListView listv;
     public ProfileFragment(){
 
     }
@@ -58,10 +64,11 @@ public class ProfileFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        final ListView listV = (ListView) rootView.findViewById(R.id.list);
+        listv = (ListView) rootView.findViewById(R.id.list);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
+
             namauser = bundle.getString("namauser");
             emailuser = bundle.getString("emailuser");
             fotouser = bundle.getString("fotouser");
@@ -69,9 +76,37 @@ public class ProfileFragment extends Fragment{
 
         context=getActivity();
         adapter = new CustomListAdapterr(getActivity(), eventList);
-        listV.setAdapter(adapter);
+        listv.setAdapter(adapter);
+        listv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                TextView nama=(TextView)view.findViewById(R.id.nama);
+                TextView kategori=(TextView)view.findViewById(R.id.kategori);
+                TextView cp=(TextView)view.findViewById(R.id.cp);
+                TextView waktu=(TextView)view.findViewById(R.id.waktu);
+                TextView deskripsi=(TextView)view.findViewById(R.id.deskripsi);
+                TextView idd=(TextView)view.findViewById(R.id.id);
+                final String nnama=nama.getText().toString();
+                final String nkategori=kategori.getText().toString();
+                final String ncp=cp.getText().toString();
+                final String nwaktu=waktu.getText().toString();
+                final String ndeskripsi=deskripsi.getText().toString();
+                final String nid=idd.getText().toString();
 
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+
+                String pesan = "Hei, Saya sudah memakai aplikasi EventHere! Lho!\n"+"Saya akan mengikuti Event: "
+                        +nnama+" pada waktu: "+nwaktu;
+                sendIntent.putExtra(Intent.EXTRA_TEXT, pesan);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Bagikan Ke..."));
+                return false;
+            }
+        });
+
+    try {
         pDialog = new ProgressDialog(getActivity());
         // Showing progress dialog before making http request
         pDialog.setTitle("Fetching Your Timeline");
@@ -82,7 +117,7 @@ public class ProfileFragment extends Fragment{
         //getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
 
         // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url+"?id="+emailuser,
+        JsonArrayRequest movieReq = new JsonArrayRequest(url + "?id=" + emailuser,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -128,7 +163,10 @@ public class ProfileFragment extends Fragment{
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(movieReq);
+    }
+    catch (Exception e){
 
+    }
         // Inflate the layout for this fragment
         return rootView;
     }

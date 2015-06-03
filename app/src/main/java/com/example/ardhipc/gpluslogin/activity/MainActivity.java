@@ -299,7 +299,7 @@ public class MainActivity extends Activity implements View.OnClickListener,
      * Revoking access from google
      * */
     private void enterapps() {
-<<<<<<< HEAD
+
         new IsiData().execute();
     }
     public class IsiData extends AsyncTask<String, String, String> {
@@ -339,26 +339,6 @@ public class MainActivity extends Activity implements View.OnClickListener,
                     Toast.LENGTH_SHORT);
             toast.show();
         }
-
-=======
-        Intent d = new Intent(MainActivity.this,MainMenu.class);
-        d.putExtra("photo",personPhotoUrl);
-        d.putExtra("email",email);
-        startActivity(d);
-//        if (mGoogleApiClient.isConnected()) {
-//            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-//            Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient)
-//                    .setResultCallback(new ResultCallback<Status>() {
-//                        @Override
-//                        public void onResult(Status arg0) {
-//                            Log.e(TAG, "User access revoked!");
-//                            mGoogleApiClient.connect();
-//                            updateUI(false);
-//                        }
-//
-//                    });
-//        }
->>>>>>> origin/master
     }
 
     /**

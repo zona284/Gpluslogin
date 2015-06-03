@@ -16,23 +16,6 @@
             android:layout_height="70dp"
             android:src="@drawable/ic_profile"
             android:scaleType="fitCenter"
-<<<<<<< HEAD
-            android:layout_centerInParent="true"
-            android:id="@+id/imageView" />
-
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/namauser"
-            android:gravity="center_horizontal"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-=======
             android:id="@+id/fotoprofil"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -51,9 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textAlignment="center" />
->>>>>>> origin/master
-
-    </RelativeLayout>
+        </RelativeLayout>
 
 
     <android.support.v7.widget.RecyclerView

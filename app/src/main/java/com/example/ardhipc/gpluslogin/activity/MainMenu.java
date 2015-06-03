@@ -1,24 +1,10 @@
 package com.example.ardhipc.gpluslogin.activity;
 
 import android.content.Intent;
-<<<<<<< HEAD
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
->>>>>>> origin/master
-=======
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
->>>>>>> 424cf4439692d0f53dd97ce2c097fb983e1b54a5
->>>>>>> origin/master
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,20 +34,12 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
-<<<<<<< HEAD
     private TextView namauserr;
     private ImageView fotouserr;
     private String email;
     private String photo,nama;
 
 
-
-=======
-    private TextView txtEmail;
-    private ImageView imgProfilePic;
-    private String email;
-    private String photo;
->>>>>>> origin/master
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,66 +56,20 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout),mToolbar);
         drawerFragment.setDrawerListener(this);
         // display the first navigation drawer view on app launch
-<<<<<<< HEAD
+
         Intent i = getIntent();
         nama = i.getStringExtra("nama");
         email = i.getStringExtra("email");
         photo = i.getStringExtra("photo");
-        fotouserr = (ImageView) findViewById(R.id.imageView);
-        namauserr = (TextView) findViewById(R.id.namauser);
+        fotouserr = (ImageView) findViewById(R.id.fotoprofil);
+        namauserr = (TextView) findViewById(R.id.email);
         namauserr.setText(email);
         Log.e(TAG, "email: " + nama);
         new LoadProfileImage(fotouserr).execute(photo);
 
-=======
-<<<<<<< HEAD
-        Intent i = getIntent();
-        email = i.getStringExtra("email");
-        photo = i.getStringExtra("photo");
-        imgProfilePic = (ImageView) findViewById(R.id.fotoprofil);
-        txtEmail = (TextView) findViewById(R.id.email);
-        txtEmail.setText(email);
-        Log.e(TAG, "email: " + email);
-        new LoadProfileImage(imgProfilePic).execute(photo);
-
-        //System.out.print(email);
-        displayView(0);
-=======
->>>>>>> origin/master
-        displayView(1);
->>>>>>> upstream/master
+        displayView(0); //fragment ke 0
     }
 
-    /**
-     * Background Async task to load user profile picture from url
-     * */
-    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public LoadProfileImage(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            if(result==null)
-                bmImage.setImageResource(R.drawable.ic_profile);
-            else
-                bmImage.setImageBitmap(result);
-        }
-    }
     /**
      * Background Async task to load user profile picture from url
      * */
@@ -242,7 +174,7 @@ public class MainMenu extends ActionBarActivity implements FragmentDrawer.Fragme
         }
 
         if(id==R.id.logout){
-            MainActivity.onStop();
+            //MainActivity.onStop();
         }
 
         return super.onOptionsItemSelected(item);

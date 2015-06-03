@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.ardhipc.gpluslogin"
-        minSdkVersion 11
+        minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -21,7 +21,7 @@ android {
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v3' }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.google.android.gms:play-services-fitness:7.3.0'
     compile 'com.google.android.gms:play-services-wearable:7.3.0'
